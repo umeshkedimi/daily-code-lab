@@ -1,13 +1,13 @@
 # Daily Code Lab
 
-A daily engineering practice repository. Two coding problems, solved and documented, every day — building depth in Python, backend engineering, data structures & algorithms, system design, and GenAI / Agentic AI engineering for high-level software and AI engineering interviews.
+A daily engineering practice repository. One coding problem, solved and documented, every day — building depth in Python, backend engineering, data structures & algorithms, system design, and GenAI / Agentic AI engineering for high-level software and AI engineering interviews.
 
 ## The Rule
 
-**Exactly 2 problems per day. No exceptions, no skipped days without a logged reason.**
+**One problem per day, solved properly. No exceptions, no skipped days without a logged reason.**
 
-- Quality over quantity — each problem is solved, tested, and documented before moving on.
-- Consistency compounds. Two problems a day, done daily, produces a large and well-reasoned body of work over months.
+- Depth over volume — some problems take longer than others; take the time needed to actually understand the problem and solution rather than rushing to close it out.
+- Consistency compounds. One well-understood problem a day, done daily, produces a large and well-reasoned body of work over months.
 - If a day is missed, it is logged in the [progress tracker](#progress-tracker), not silently skipped.
 
 ## Learning Goals
@@ -31,28 +31,23 @@ A daily engineering practice repository. Two coding problems, solved and documen
 
 ## Repository Structure
 
-Organized by day, with each day containing two independently solved problems.
+Organized by day, with each day containing one solved problem.
 
 ```
 daily-code-lab/
 ├── README.md
 ├── 2026-08-12/
-│   ├── problem-1-<slug>/
-│   │   ├── problem.md
-│   │   ├── solution.py
-│   │   └── notes.md
-│   └── problem-2-<slug>/
-│       ├── problem.md
-│       ├── solution.py
-│       └── notes.md
+│   ├── problem.md
+│   ├── solution.py
+│   └── notes.md
 ├── 2026-08-13/
-│   ├── problem-1-<slug>/
-│   └── problem-2-<slug>/
+│   ├── problem.md
+│   ├── solution.py
+│   └── notes.md
 └── ...
 ```
 
 - Day folders are named `YYYY-MM-DD`.
-- Each problem folder is named `problem-N-<short-slug>` (e.g. `problem-1-two-sum`).
 - `problem.md` and `notes.md` together follow the [problem format](#problem-format) below.
 - Solutions are written in the language most relevant to the category (Python by default, unless the problem specifically calls for another stack).
 
@@ -74,9 +69,9 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 
 ## Progress Tracker
 
-| Date | Problem 1 | Problem 2 | Category | Status |
-|---|---|---|---|---|
-| YYYY-MM-DD | — | — | — | — |
+| Date | Problem | Category | Status |
+|---|---|---|---|
+| YYYY-MM-DD | — | — | — |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
