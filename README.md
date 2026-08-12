@@ -71,7 +71,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 
 | Date | Problem | Category | Status |
 |---|---|---|---|
-| YYYY-MM-DD | — | — | — |
+| 2026-08-12 | [Bird class + external REST API](2026-08-12/problem.md) | `backend` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
