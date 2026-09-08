@@ -74,6 +74,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-08-12 | [Bird class + external REST API](2026-08-12/problem.md) | `backend` | done |
 | 2026-08-13 | [Redis-backed distributed rate limiter](2026-08-13/problem.md) | `backend` / `system-design` | done |
 | 2026-08-14 | [Async concurrent multi-API fetch + combine](2026-08-14/problem.md) | `backend` | done |
+| 2026-09-08 | [Redis-backed distributed lock](2026-09-08/problem.md) | `backend` / `system-design` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
