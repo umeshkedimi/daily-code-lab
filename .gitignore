@@ -172,3 +172,15 @@ cython_debug/
 
 # VS Code (machine-local interpreter path, etc.)
 .vscode/
+
+# Terraform local state/cache -- never commit state (can contain secrets)
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
