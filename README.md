@@ -80,6 +80,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-11 | [FastAPI + LangChain OpenAI gateway, Docker, Terraform](2026-09-11/problem.md) | `genai-agentic` / `backend` | done |
 | 2026-09-16 | [Tool-calling agent loop from scratch](2026-09-16/problem.md) | `genai-agentic` | done |
 | 2026-09-17 | [LiteLLM-style unified LLM gateway](2026-09-17/problem.md) | `genai-agentic` / `backend` / `system-design` | done |
+| 2026-09-17 (2nd) | [Rolling conversation-history summarizer](2026-09-17b/problem.md) | `genai-agentic` | done (exception to the 1/day rule) |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
