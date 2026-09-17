@@ -79,6 +79,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-10 | [Async Postgres connection pool](2026-09-10/problem.md) | `backend` / `system-design` | done |
 | 2026-09-11 | [FastAPI + LangChain OpenAI gateway, Docker, Terraform](2026-09-11/problem.md) | `genai-agentic` / `backend` | done |
 | 2026-09-16 | [Tool-calling agent loop from scratch](2026-09-16/problem.md) | `genai-agentic` | done |
+| 2026-09-17 | [LiteLLM-style unified LLM gateway](2026-09-17/problem.md) | `genai-agentic` / `backend` / `system-design` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
