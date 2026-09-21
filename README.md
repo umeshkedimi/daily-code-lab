@@ -28,6 +28,7 @@ A daily engineering practice repository. One coding problem, solved and document
 | `backend` | APIs, databases, concurrency, caching, messaging, auth |
 | `system-design` | Scalability, distributed systems, trade-off write-ups |
 | `genai-agentic` | LLM tool use, agent design, RAG, prompt/context engineering, evals |
+| `security` | Secure-by-design components: input validation, SSRF/injection defenses, threat modeling |
 
 ## Repository Structure
 
@@ -82,6 +83,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-17 | [LiteLLM-style unified LLM gateway](2026-09-17/problem.md) | `genai-agentic` / `backend` / `system-design` | done |
 | 2026-09-17 (2nd) | [Rolling conversation-history summarizer](2026-09-17b/problem.md) | `genai-agentic` | done (exception to the 1/day rule) |
 | 2026-09-20 | [LRU cache with O(1) ops, TTL, and thread safety](2026-09-20/problem.md) | `dsa` / `python` | done |
+| 2026-09-21 | [SSRF-safe URL fetcher](2026-09-21/problem.md) | `security` / `backend` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
