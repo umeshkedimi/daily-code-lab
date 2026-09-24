@@ -84,6 +84,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-17 (2nd) | [Rolling conversation-history summarizer](2026-09-17b/problem.md) | `genai-agentic` | done (exception to the 1/day rule) |
 | 2026-09-20 | [LRU cache with O(1) ops, TTL, and thread safety](2026-09-20/problem.md) | `dsa` / `python` | done |
 | 2026-09-21 | [SSRF-safe URL fetcher](2026-09-21/problem.md) | `security` / `backend` | done |
+| 2026-09-24 | [Consistent hashing ring with virtual nodes](2026-09-24/problem.md) | `dsa` / `system-design` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
