@@ -1,0 +1,4 @@
+pytest>=8.0,<9
+# Optional: only needed for the dense-retrieval rows (BM25, n-gram, chunking, eval harness run without them)
+numpy>=1.26
+fastembed>=0.7,<1
