@@ -86,6 +86,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-21 | [SSRF-safe URL fetcher](2026-09-21/problem.md) | `security` / `backend` | done |
 | 2026-09-24 | [Consistent hashing ring with virtual nodes](2026-09-24/problem.md) | `dsa` / `system-design` | done |
 | 2026-09-26 | [RAG retrieval pipeline + evaluation harness](2026-09-26/problem.md) | `genai-agentic` | done |
+| 2026-09-27 | [Union-Find (DSU) + Kruskal's MST](2026-09-27/problem.md) | `dsa` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
