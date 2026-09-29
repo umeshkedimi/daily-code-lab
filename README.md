@@ -88,6 +88,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-26 | [RAG retrieval pipeline + evaluation harness](2026-09-26/problem.md) | `genai-agentic` | done |
 | 2026-09-27 | [Union-Find (DSU) + Kruskal's MST](2026-09-27/problem.md) | `dsa` | done |
 | 2026-09-28 | [Bloom filter, measured against its formulas](2026-09-28/problem.md) | `dsa` / `backend` | done |
+| 2026-09-29 | [Binary min-heap + k-way merge](2026-09-29/problem.md) | `dsa` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
