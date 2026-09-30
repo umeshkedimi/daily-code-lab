@@ -90,6 +90,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-28 | [Bloom filter, measured against its formulas](2026-09-28/problem.md) | `dsa` / `backend` | done |
 | 2026-09-29 | [Binary min-heap + k-way merge](2026-09-29/problem.md) | `dsa` | done |
 | 2026-09-29 (2nd) | [Trie (prefix tree) with pruning delete](2026-09-29b/problem.md) | `dsa` | done (exception to the 1/day rule) |
+| 2026-09-30 | [Sliding window maximum (monotonic deque)](2026-09-30/problem.md) | `dsa` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
