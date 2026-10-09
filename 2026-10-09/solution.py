@@ -22,19 +22,52 @@ def dijkstra(graph: Graph, source: Node) -> Tuple[Dist, Parent]:
     Returns (dist, parent); parent[source] is None. Unreachable nodes are
     absent from both. Raises ValueError on a negative edge weight.
     """
-    raise NotImplementedError
+    for u, edges in graph.items():
+        for v, w in edges:
+            if w < 0:
+                raise ValueError(f"negative edge weight {w} on {u!r}->{v!r}")
+
+    dist: Dist = {source: 0}
+    parent: Parent = {source: None}
+    heap: List[Tuple[float, int, Node]] = [(0, 0, source)]
+    done = set()
+    tie = 1  # tiebreaker so heapq never compares nodes (which may be unorderable)
+    while heap:
+        d, _, u = heapq.heappop(heap)
+        if u in done:  # stale entry: u was already finalized via a shorter path
+            continue
+        done.add(u)
+        for v, w in graph.get(u, ()):
+            nd = d + w
+            if v not in dist or nd < dist[v]:
+                dist[v] = nd
+                parent[v] = u
+                heapq.heappush(heap, (nd, tie, v))
+                tie += 1
+    return dist, parent
 
 
 def reconstruct_path(parent: Parent, target: Node) -> Optional[List[Node]]:
     """Walk `parent` back from `target` to the source; None if unreachable."""
-    raise NotImplementedError
+    if target not in parent:
+        return None
+    path = []
+    node: Optional[Node] = target
+    while node is not None:
+        path.append(node)
+        node = parent[node]
+    path.reverse()
+    return path
 
 
 def shortest_path(
     graph: Graph, source: Node, target: Node
 ) -> Optional[Tuple[float, List[Node]]]:
     """(cost, path) from source to target, or None if unreachable."""
-    raise NotImplementedError
+    dist, parent = dijkstra(graph, source)
+    if target not in dist:
+        return None
+    return dist[target], reconstruct_path(parent, target)
 
 
 def bellman_ford(graph: Graph, source: Node) -> Tuple[Dist, Parent]:
@@ -42,4 +75,20 @@ def bellman_ford(graph: Graph, source: Node) -> Tuple[Dist, Parent]:
 
     Raises NegativeCycleError if a negative cycle is reachable from source.
     """
-    raise NotImplementedError
+    edges = [(u, v, w) for u, adj in graph.items() for v, w in adj]
+    nodes = {source} | {u for u, _, _ in edges} | {v for _, v, _ in edges}
+    dist: Dist = {source: 0}
+    parent: Parent = {source: None}
+    for _ in range(len(nodes) - 1):
+        changed = False
+        for u, v, w in edges:
+            if u in dist and (v not in dist or dist[u] + w < dist[v]):
+                dist[v] = dist[u] + w
+                parent[v] = u
+                changed = True
+        if not changed:
+            return dist, parent
+    for u, v, w in edges:  # any further relaxation means a reachable negative cycle
+        if u in dist and dist[u] + w < dist[v]:
+            raise NegativeCycleError(f"negative cycle reachable via {u!r}->{v!r}")
+    return dist, parent
