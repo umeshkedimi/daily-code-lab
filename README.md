@@ -94,6 +94,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-09-30 (2nd) | [Topological sort (Kahn's + DFS), cross-checked](2026-09-30b/problem.md) | `dsa` | done (exception to the 1/day rule) |
 | 2026-10-08 | [Rate limiter algorithm comparison (fixed/sliding/token bucket)](2026-10-08/problem.md) | `backend` / `system-design` | done |
 | 2026-10-08 (2nd) | [JWT auth with refresh-token rotation + replay detection](2026-10-08b/problem.md) | `security` / `backend` | done (exception to the 1/day rule) |
+| 2026-10-10 | [Repository pattern + Unit of Work (in-memory / SQLite backends)](2026-10-10/problem.md) | `backend` / `system-design` / `python` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
