@@ -24,7 +24,11 @@ Graph representation: adjacency list, `Dict[Node, List[Tuple[Node, float]]]` (`g
 
 ## Approach
 
-1. TODO: fill in once implemented.
+1. **Validate first**: scan every edge and raise `ValueError` on a negative weight, before any work. Dijkstra's correctness rests on one invariant -- when a node is popped with the smallest tentative distance, no later path can improve it -- and a negative edge is exactly what falsifies that.
+2. **Dijkstra with lazy deletion**: `heapq` has no decrease-key, so every improvement just pushes a new `(dist, tie, node)` entry. When an entry is popped for a node already finalized, it is stale and skipped (`if u in done: continue`). The `tie` counter means the heap never falls back to comparing node objects, which may not be orderable.
+3. **`parent` map**: updated on every strict improvement; `reconstruct_path` walks it from the target back to the source (`parent[source] = None`) and reverses. Unreachable nodes are simply absent from `dist`/`parent`, so "reachable?" is `target in dist`.
+4. **Bellman-Ford as the independent reference**: relax every edge up to `V - 1` times (early exit when a pass changes nothing), then one more pass -- any edge that still relaxes means a negative cycle reachable from the source. It shares no logic with the heap version, so agreement between the two is meaningful.
+5. **Cross-check**: 25 seeded random non-negative graphs; Dijkstra and Bellman-Ford must produce identical `dist`, and every reconstructed path must be a real path whose edge weights sum to the reported distance.
 
 ## Stretch
 
