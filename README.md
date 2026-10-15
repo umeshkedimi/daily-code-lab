@@ -99,6 +99,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-10-11 (2nd) | [Prompt-injection detection for a tool-calling agent](2026-10-11b/problem.md) | `genai-agentic` / `security` | done (exception to the 1/day rule) |
 | 2026-10-13 | [Concurrency models in Python, measured: threading vs multiprocessing vs asyncio](2026-10-13/problem.md) | `python` | done |
 | 2026-10-14 | [TOTP from scratch: RFC test vectors, replay protection, measured brute-force cost](2026-10-14/problem.md) | `security` | done |
+| 2026-10-15 | [Descriptor protocol from scratch: property/classmethod/staticmethod, checked for parity](2026-10-15/problem.md) | `python` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
