@@ -100,6 +100,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-10-13 | [Concurrency models in Python, measured: threading vs multiprocessing vs asyncio](2026-10-13/problem.md) | `python` | done |
 | 2026-10-14 | [TOTP from scratch: RFC test vectors, replay protection, measured brute-force cost](2026-10-14/problem.md) | `security` | done |
 | 2026-10-15 | [Descriptor protocol from scratch: property/classmethod/staticmethod, checked for parity](2026-10-15/problem.md) | `python` | done |
+| 2026-10-22 | [LFU cache (O(1)), with the staleness-pollution weakness measured against LRU](2026-10-22/problem.md) | `dsa` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
