@@ -44,7 +44,6 @@ class CircuitBreaker:
         self._window: Deque[bool] = deque(maxlen=window_size)
         self._opened_at: float | None = None
         self._half_open_calls = 0
-        self._half_open_failures = 0
 
     @property
     def state(self) -> State:
@@ -58,4 +57,49 @@ class CircuitBreaker:
         Raises CircuitOpenError without calling func when the circuit is
         OPEN and the reset_timeout has not yet elapsed.
         """
-        raise NotImplementedError
+        now = self._clock()
+
+        if self._state is State.OPEN:
+            if now - self._opened_at < self.reset_timeout:
+                raise CircuitOpenError("circuit is open")
+            self._state = State.HALF_OPEN
+            self._half_open_calls = 0
+
+        if self._state is State.HALF_OPEN:
+            if self._half_open_calls >= self.half_open_max_calls:
+                raise CircuitOpenError("half-open trial budget exhausted")
+            self._half_open_calls += 1
+            try:
+                result = func(*args, **kwargs)
+            except Exception:
+                self._trip(now)
+                raise
+            if self._half_open_calls >= self.half_open_max_calls:
+                self._reset_closed()
+            return result
+
+        # CLOSED
+        try:
+            result = func(*args, **kwargs)
+        except Exception:
+            self._window.append(False)
+            if self._should_trip():
+                self._trip(now)
+            raise
+        self._window.append(True)
+        return result
+
+    def _should_trip(self) -> bool:
+        if len(self._window) < self.min_requests:
+            return False
+        failures = self._window.count(False)
+        return failures / len(self._window) >= self.failure_threshold
+
+    def _trip(self, now: float) -> None:
+        self._state = State.OPEN
+        self._opened_at = now
+
+    def _reset_closed(self) -> None:
+        self._state = State.CLOSED
+        self._window.clear()
+        self._half_open_calls = 0

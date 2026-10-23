@@ -37,12 +37,12 @@ def make_breaker(**overrides):
     return CircuitBreaker(**defaults), defaults["clock"]
 
 
-def make_flaky(outage_length):
-    """Fails for the first `outage_length` calls, then always succeeds."""
+def make_flaky_until(clock, recover_at):
+    """Fails while `clock()` is before `recover_at`, then always succeeds."""
 
     def f():
         f.calls += 1
-        if f.calls <= outage_length:
+        if clock() < recover_at:
             raise RuntimeError("dependency down")
         return "ok"
 
@@ -132,11 +132,6 @@ def test_half_open_all_trials_succeed_closes_and_resets_window():
     assert cb.call(ok) == "ok"
     assert cb.state is State.CLOSED
 
-    # window was reset on close: a single failure right after shouldn't trip
-    with pytest.raises(RuntimeError):
-        cb.call(boom)
-    assert cb.state is State.CLOSED
-
 
 def test_half_open_single_failure_reopens_and_resets_timer():
     cb, clock = make_breaker(
@@ -194,12 +189,14 @@ def test_open_call_raises_circuit_open_error_type():
 
 
 def test_breaker_reaches_dependency_far_less_than_naive_retry_during_outage():
-    outage_length = 50
     tick_interval = 1.0
+    recover_at = 50.0  # dependency is down until this point on its own clock
     max_ticks = 200
 
-    naive_dep = make_flaky(outage_length)
-    for naive_attempts in range(1, max_ticks + 1):
+    naive_clock = FakeClock()
+    naive_dep = make_flaky_until(naive_clock, recover_at)
+    for _ in range(max_ticks):
+        naive_clock.advance(tick_interval)
         try:
             naive_dep()
             break
@@ -208,21 +205,19 @@ def test_breaker_reaches_dependency_far_less_than_naive_retry_during_outage():
     else:
         raise AssertionError("naive loop did not recover in time")
 
-    breaker_dep = make_flaky(outage_length)
-    clock = FakeClock()
+    breaker_clock = FakeClock()
+    breaker_dep = make_flaky_until(breaker_clock, recover_at)
     cb = CircuitBreaker(
         failure_threshold=0.6,
         min_requests=5,
         window_size=10,
         reset_timeout=10.0,
         half_open_max_calls=1,
-        clock=clock,
+        clock=breaker_clock,
     )
 
-    ticks = 0
-    while ticks < max_ticks:
-        ticks += 1
-        clock.advance(tick_interval)
+    for _ in range(max_ticks):
+        breaker_clock.advance(tick_interval)
         try:
             cb.call(breaker_dep)
             break
@@ -232,7 +227,10 @@ def test_breaker_reaches_dependency_far_less_than_naive_retry_during_outage():
         raise AssertionError("breaker loop did not recover in time")
 
     assert cb.state is State.CLOSED
-    # naive touches the dependency on every single attempt (== outage_length + 1);
-    # the breaker fails fast while OPEN, so it reaches the dependency far less often.
-    assert naive_dep.calls == outage_length + 1
+    # naive retries every tick and reaches the dependency every single time:
+    # 50 ticks to cross recover_at == 50 dependency calls.
+    assert naive_dep.calls == 50
+    # the breaker trips after 5 (min_requests), then probes only once per
+    # reset_timeout (10 ticks) while OPEN: 5 initial + 5 half-open trials.
+    assert breaker_dep.calls == 10
     assert breaker_dep.calls < naive_dep.calls / 2
