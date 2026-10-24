@@ -102,7 +102,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-10-15 | [Descriptor protocol from scratch: property/classmethod/staticmethod, checked for parity](2026-10-15/problem.md) | `python` | done |
 | 2026-10-22 | [LFU cache (O(1)), with the staleness-pollution weakness measured against LRU](2026-10-22/problem.md) | `dsa` | done |
 | 2026-10-23 | [Circuit breaker (closed/open/half-open), measured against naive retry-with-backoff](2026-10-23/problem.md) | `backend` / `system-design` | done |
-| 2026-10-24 | [Context-window truncation strategies, measured against a buried-fact recall task](2026-10-24/problem.md) | `genai-agentic` | in-progress |
+| 2026-10-24 | [Context-window truncation strategies, measured against a buried-fact recall task](2026-10-24/problem.md) | `genai-agentic` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
