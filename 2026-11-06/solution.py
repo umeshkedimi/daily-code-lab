@@ -16,7 +16,12 @@ def naive_compare(a: bytes, b: bytes) -> Tuple[bool, int]:
     actually performed -- the simulated timing side channel.
     Raises ValueError if len(a) != len(b).
     """
-    raise NotImplementedError
+    if len(a) != len(b):
+        raise ValueError("naive_compare requires equal-length inputs")
+    for i in range(len(a)):
+        if a[i] != b[i]:
+            return False, i + 1
+    return True, len(a)
 
 
 def constant_time_compare(a: bytes, b: bytes) -> Tuple[bool, int]:
@@ -25,7 +30,12 @@ def constant_time_compare(a: bytes, b: bytes) -> Tuple[bool, int]:
     ops is always len(a), whether it matches or not.
     Raises ValueError if len(a) != len(b).
     """
-    raise NotImplementedError
+    if len(a) != len(b):
+        raise ValueError("constant_time_compare requires equal-length inputs")
+    diff = 0
+    for x, y in zip(a, b):
+        diff |= x ^ y
+    return diff == 0, len(a)
 
 
 class TimingOracle:
@@ -40,7 +50,8 @@ class TimingOracle:
         """The attacker-visible signal only: the ops count for
         comparing `guess` against the secret. Never reveals whether it
         matched."""
-        raise NotImplementedError
+        _, ops = self._compare_fn(guess, self._secret)
+        return ops
 
 
 def recover_secret(oracle: TimingOracle, length: int, alphabet: bytes) -> Tuple[bytes, Set[int]]:
@@ -50,4 +61,21 @@ def recover_secret(oracle: TimingOracle, length: int, alphabet: bytes) -> Tuple[
     positions where every alphabet candidate tied (no signal) -- the
     recovered byte at those positions is a placeholder, not a guess.
     """
-    raise NotImplementedError
+    recovered = bytearray(length)
+    undetermined: Set[int] = set()
+
+    for pos in range(length):
+        scores = {}
+        for candidate in alphabet:
+            guess = bytes(recovered[:pos]) + bytes([candidate]) + bytes([FILLER]) * (length - pos - 1)
+            scores[candidate] = oracle.probe(guess)
+
+        best = max(scores.values())
+        winners = [b for b, ops in scores.items() if ops == best]
+        if len(winners) == 1:
+            recovered[pos] = winners[0]
+        else:
+            recovered[pos] = alphabet[0]
+            undetermined.add(pos)
+
+    return bytes(recovered), undetermined
