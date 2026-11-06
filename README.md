@@ -103,6 +103,7 @@ This format is non-negotiable — it's what turns solved problems into a reusabl
 | 2026-10-22 | [LFU cache (O(1)), with the staleness-pollution weakness measured against LRU](2026-10-22/problem.md) | `dsa` | done |
 | 2026-10-23 | [Circuit breaker (closed/open/half-open), measured against naive retry-with-backoff](2026-10-23/problem.md) | `backend` / `system-design` | done |
 | 2026-10-24 | [Context-window truncation strategies, measured against a buried-fact recall task](2026-10-24/problem.md) | `genai-agentic` | done |
+| 2026-11-06 | [Timing-attack resistant string comparison, measured via a simulated side channel](2026-11-06/problem.md) | `security` | in-progress |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
