@@ -34,12 +34,16 @@ def instance_memory_bytes(obj: Any) -> int:
     plus its __dict__'s own size if it has one (sys.getsizeof(obj)
     alone doesn't follow that pointer).
     """
-    raise NotImplementedError
+    total = sys.getsizeof(obj)
+    instance_dict = getattr(obj, "__dict__", None)
+    if instance_dict is not None:
+        total += sys.getsizeof(instance_dict)
+    return total
 
 
 def total_memory_bytes(objs: Iterable[Any]) -> int:
     """instance_memory_bytes summed over objs."""
-    raise NotImplementedError
+    return sum(instance_memory_bytes(obj) for obj in objs)
 
 
 def allows_dynamic_attribute(obj: Any) -> bool:
@@ -47,4 +51,10 @@ def allows_dynamic_attribute(obj: Any) -> bool:
     class or its ancestors succeeds; False if it raises AttributeError.
     Leaves obj unchanged either way.
     """
-    raise NotImplementedError
+    probe_name = "__dynamic_probe_attr__"
+    try:
+        setattr(obj, probe_name, 1)
+    except AttributeError:
+        return False
+    delattr(obj, probe_name)
+    return True
