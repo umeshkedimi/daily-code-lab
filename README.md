@@ -68,6 +68,11 @@ Every problem is documented consistently across two files:
 
 This format is non-negotiable — it's what turns solved problems into a reusable reference instead of a pile of scripts.
 
+## GenAI / Agentic Roadmap
+
+Staged topic checklist for the `genai-agentic` category, kept separately from
+the tracker below: see [GENAI_AGENTIC_ROADMAP.md](GENAI_AGENTIC_ROADMAP.md).
+
 ## Progress Tracker
 
 | Date | Problem | Category | Status |
