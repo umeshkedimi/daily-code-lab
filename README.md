@@ -110,7 +110,7 @@ the tracker below: see [GENAI_AGENTIC_ROADMAP.md](GENAI_AGENTIC_ROADMAP.md).
 | 2026-10-24 | [Context-window truncation strategies, measured against a buried-fact recall task](2026-10-24/problem.md) | `genai-agentic` | done |
 | 2026-11-06 | [Timing-attack resistant string comparison, measured via a simulated side channel](2026-11-06/problem.md) | `security` | done |
 | 2026-11-16 | [`__slots__` memory savings, measured against a regular dict-backed class](2026-11-16/problem.md) | `python` | done |
-| 2026-11-18 | [Token allocation strategies across competing context pools](2026-11-18/problem.md) | `genai-agentic` | in-progress |
+| 2026-11-18 | [Token allocation strategies across competing context pools](2026-11-18/problem.md) | `genai-agentic` | done |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 

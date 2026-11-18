@@ -142,6 +142,27 @@ def test_starved_budget_all_three_strategies_fail_every_scenario():
         assert answer(assemble(greedy_marginal_allocate(scenario, starved_budget), POOL_ORDER)) is None
 
 
+# --- structural: greedy skips a non-fitting item, it doesn't stop there --
+
+
+def test_greedy_marginal_skips_a_non_fitting_item_instead_of_stopping():
+    # BIG (score 100, 8 tokens) is ranked first and fits within budget 10,
+    # using 8. The next-ranked item would need 5 more (13 > 10) and must be
+    # skipped -- but a cheap, lower-ranked item that still fits in the 2
+    # tokens left over must still be picked up. A greedy that stops at the
+    # first non-fitting item instead of skipping it would miss this one
+    # entirely, even though it fits.
+    big = "big big big big big big big big"
+    tiny = "tiny tiny"
+    pools = {
+        "a": [Candidate(big, 100), Candidate("mid mid mid mid mid", 90)],
+        "b": [Candidate(tiny, 10)],
+    }
+    alloc = greedy_marginal_allocate(pools, 10)
+    assert alloc["a"] == [Candidate(big, 100)]
+    assert alloc["b"] == [Candidate(tiny, 10)]
+
+
 # --- structural: fixed_proportion wastes leftover sub-budget silently -----
 
 

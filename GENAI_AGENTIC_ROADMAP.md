@@ -15,11 +15,11 @@ they are not checked off on that basis alone.
 
 - [x] Context compression / overflow prevention — [2026-10-24](2026-10-24/problem.md)
 - [ ] Dynamic context assembly
-- [ ] Token allocation strategies across competing context needs
+- [x] Token allocation strategies across competing context needs — [2026-11-18](2026-11-18/problem.md)
 - [ ] System prompt architecture
 - [ ] Pre-flight routing (deciding what goes in context before the call is made)
 
-Touched by: [2026-09-17 (2nd)](2026-09-17b/problem.md) (rolling summarizer — overlaps compression), [2026-10-24](2026-10-24/problem.md) (truncation strategies, checked above).
+Touched by: [2026-09-17 (2nd)](2026-09-17b/problem.md) (rolling summarizer — overlaps compression), [2026-10-24](2026-10-24/problem.md) (truncation strategies, checked above), [2026-11-18](2026-11-18/problem.md) (allocation across competing pools, checked above).
 
 ## Stage 2: Advanced RAG & Hybrid Search
 
