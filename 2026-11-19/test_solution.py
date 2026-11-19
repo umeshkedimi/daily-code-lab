@@ -66,6 +66,20 @@ def test_naive_and_secure_compare_agree_on_a_single_flipped_character():
     assert secure_signatures_equal(sig, flipped) is False
 
 
+# --- the default comparator must be the safe one --------------------------
+# naive_signatures_equal and secure_signatures_equal are *functionally*
+# identical on every input (that's the whole point of 2026-11-06's finding:
+# the vulnerability was never about correctness) -- so no accept/reject test
+# above can ever catch a default swapped to the naive one. The only thing
+# that can is checking the default directly.
+
+
+def test_default_compare_fn_is_the_constant_time_one_not_the_naive_one():
+    clock = FakeClock(1000)
+    verifier = WebhookVerifier(SECRET, tolerance=300, clock=clock)
+    assert verifier._compare_fn is secure_signatures_equal
+
+
 # --- WebhookVerifier: basic accept/reject ---------------------------------
 
 

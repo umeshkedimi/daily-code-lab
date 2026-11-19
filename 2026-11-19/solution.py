@@ -22,12 +22,17 @@ def naive_signatures_equal(a: str, b: str) -> bool:
     """Explicit early-exit comparison, included only to contrast with
     secure_signatures_equal below. Never the default -- see 2026-11-06.
     """
-    raise NotImplementedError
+    if len(a) != len(b):
+        return False
+    for i in range(len(a)):
+        if a[i] != b[i]:
+            return False
+    return True
 
 
 def secure_signatures_equal(a: str, b: str) -> bool:
     """The actually-safe comparator for untrusted signatures."""
-    raise NotImplementedError
+    return hmac.compare_digest(a, b)
 
 
 class WebhookVerifier:
@@ -51,7 +56,23 @@ class WebhookVerifier:
         mismatch, reject on replay when dedup is enabled; otherwise
         accept and (if dedup) remember the signature.
         """
-        raise NotImplementedError
+        now = self._clock()
+        if abs(now - timestamp) > self.tolerance:
+            return False
+        expected = sign(payload, self._secret, timestamp)
+        if not self._compare_fn(expected, signature):
+            return False
+        if self.dedup:
+            self._evict_stale(now)
+            if signature in self._seen:
+                return False
+            self._seen[signature] = timestamp
+        return True
+
+    def _evict_stale(self, now: int) -> None:
+        stale = [sig for sig, ts in self._seen.items() if abs(now - ts) > self.tolerance]
+        for sig in stale:
+            del self._seen[sig]
 
     @property
     def seen_count(self) -> int:
