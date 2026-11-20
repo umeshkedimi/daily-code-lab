@@ -15,10 +15,12 @@ class ManagedResource:
         self.suppress = suppress
 
     def __enter__(self) -> "ManagedResource":
-        raise NotImplementedError
+        self.log.append(f"open:{self.name}")
+        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> bool:
-        raise NotImplementedError
+        self.log.append(f"close:{self.name}")
+        return self.suppress
 
 
 @contextlib.contextmanager
@@ -26,8 +28,14 @@ def correct_resource(log: List[str], name: str, suppress: bool = False) -> Itera
     """Same observable contract as ManagedResource: cleanup guaranteed
     via try/finally, exception re-raised unless suppress is True.
     """
-    raise NotImplementedError
-    yield  # pragma: no cover
+    log.append(f"open:{name}")
+    try:
+        yield name
+    except Exception:
+        if not suppress:
+            raise
+    finally:
+        log.append(f"close:{name}")
 
 
 @contextlib.contextmanager
@@ -35,5 +43,6 @@ def leaky_resource(log: List[str], name: str) -> Iterator[str]:
     """Deliberately missing try/finally around yield -- included only
     to measure what breaks, never to be used for anything else.
     """
-    raise NotImplementedError
-    yield  # pragma: no cover
+    log.append(f"open:{name}")
+    yield name
+    log.append(f"close:{name}")
