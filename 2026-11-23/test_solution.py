@@ -118,6 +118,19 @@ def test_late_replay_after_ttl_expiry_executes_as_a_genuine_duplicate_charge():
     assert len(ledger.charges) == 2  # the idempotency protection is gone
 
 
+def test_replay_at_exact_ttl_boundary_still_deduplicates():
+    # ttl is inclusive, the same convention 2026-11-19's freshness window
+    # used: a record exactly ttl old is still valid, not yet evicted.
+    clock = FakeClock(0)
+    ledger = Ledger()
+    idem = IdempotentChargeService(ledger, clock, ttl=100)
+
+    idem.charge("key-7", "acct-1", 500)
+    clock.now = 100  # exactly at the ttl boundary
+    idem.charge("key-7", "acct-1", 500)
+    assert len(ledger.charges) == 1
+
+
 def test_replay_within_ttl_still_correctly_deduplicates():
     clock = FakeClock(0)
     ledger = Ledger()

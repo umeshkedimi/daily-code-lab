@@ -43,7 +43,21 @@ class IdempotentChargeService:
         for a mismatched reuse, or execute a real charge and remember
         it.
         """
-        raise NotImplementedError
+        now = self._clock()
+        self._evict_stale(now)
+        if idempotency_key in self._store:
+            _, stored_account, stored_amount, charge_id = self._store[idempotency_key]
+            if stored_account != account_id or stored_amount != amount:
+                raise IdempotencyKeyConflict(idempotency_key)
+            return charge_id
+        charge_id = self.ledger.execute_charge(account_id, amount)
+        self._store[idempotency_key] = (now, account_id, amount, charge_id)
+        return charge_id
+
+    def _evict_stale(self, now: int) -> None:
+        stale = [k for k, (ts, *_rest) in self._store.items() if now - ts > self.ttl]
+        for k in stale:
+            del self._store[k]
 
     @property
     def store_size(self) -> int:
