@@ -114,6 +114,7 @@ the tracker below: see [GENAI_AGENTIC_ROADMAP.md](GENAI_AGENTIC_ROADMAP.md).
 | 2026-11-19 | [HMAC webhook signature verification with replay protection](2026-11-19/problem.md) | `security` | done |
 | 2026-11-20 | [Context manager protocol: class-based vs @contextmanager, and the missing-try/finally leak](2026-11-20/problem.md) | `python` | done |
 | 2026-11-21 | [Fenwick tree vs naive prefix-sum structures, measured by exact operation counts](2026-11-21/problem.md) | `dsa` | done |
+| 2026-11-23 | [Idempotency-key charge semantics, measured against naive retry duplication](2026-11-23/problem.md) | `system-design` | in-progress |
 
 Update this table on the same day a problem is solved. `Status` is one of: `done`, `in-progress`, `skipped (reason)`.
 
