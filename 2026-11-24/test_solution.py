@@ -16,6 +16,7 @@ ATTACK_STRINGS = [
     "/etc/passwd",
     "subdir/../../etc/passwd",
     ("../" * 10) + "etc/passwd",
+    "..",  # bare, no trailing slash -- escapes by exactly one level
 ]
 
 BENIGN_STRINGS = [
@@ -71,7 +72,7 @@ def test_naive_string_check_join_blocks_dotdot_attacks_but_not_absolute_override
             if escapes_base(base_dir, result):
                 escaped += 1
 
-    assert blocked == 4
+    assert blocked == 5
     assert escaped == 1
 
 
@@ -80,6 +81,14 @@ def test_naive_string_check_join_specifically_lets_absolute_path_through():
     # / operator) both discard the base entirely for an absolute 2nd arg.
     result = naive_string_check_join("/var/data", "/etc/passwd")
     assert result == "/etc/passwd"
+
+
+def test_naive_string_check_join_catches_bare_dotdot_without_trailing_slash():
+    # a check for the substring '../' specifically (rather than '..')
+    # would miss this -- a bare '..' with nothing after it contains no
+    # slash at all, and still escapes by exactly one level.
+    with pytest.raises(PathTraversalError):
+        naive_string_check_join("/var/data", "..")
 
 
 # --- safe_join: blocks every attack, zero escapes ------------------------
